@@ -49,7 +49,7 @@ Download and load the pancreatic dataset from the recount2 repository, which con
 download.file( "http://idies.jhu.edu/recount/data/v2/SRP056835/counts_gene.tsv.gz", "SRP056835.tsv.gz" )
 ```
 
-Load the data using the function `read.table()`. Note that as the dataset contains headers you must use `header =TRUE`.  Assign the `data.frame` to the name "pancreas". 
+Load the data using the function `read.table()`. Note that as the dataset contains headers you must use `header =TRUE`.  Assign the `data.frame` to the name "pancreas" using `<-`. In R this arrow `<-` always assigns something to a variable. In this case the table is assigned to the variable names "pancreas". In other cases, we might use a single letter or abbreviation to represent a value, a table or data subset.
 
 ```{r}
 pancreas <- read.table( "SRP056835.tsv.gz", header=TRUE )
@@ -76,7 +76,7 @@ The most important first step in any data analyses is to look at the data. `data
 View only the **end** of the pancreas `data.frame` to be sure it was loaded completely.
 
 ```{r}
-# >>> Fix this command
+# >>> Complete this command
 pancreas
 ```
 
@@ -103,7 +103,7 @@ View the entire sra run table.
 The functions `nrow()` and `ncol()` return the numbers of rows or columns present in the dataset. Use one of these functions to determine how many rows are in the pancreas `data.frame`.
 
 ```{r}
-# >>> Fix this command
+# >>> Complete this command
 (pancreas)
 ```
 
@@ -152,7 +152,7 @@ The same column can be accessed using the `$` between the `data.frame` name and 
 
 #### Retrieving multiple rows and columns
 
-To retrieve multiple row records, use `c()` within the single square brackets. Retrieve rows 10 and 20. (hint: Don't forget the comma for columns.) 
+To retrieve multiple row records, use `c()` within the single square brackets. Retrieve rows 10 and 20. Note the comma for columns. 
 
 ```{r}
 sra[c(10,20),]
@@ -167,7 +167,7 @@ Use the same technique to retrieve columns 1 and 4.
 Finally, if you need to retrieve several consecutive columns/rows, you can get rid of the `c` and use a `:` between the lowest and highest column numbers you wish to retrieve (i.e. for columns 2 through 6, use `(2:6)`). Retrieve all columns that are numerical from the pancreas dataset using a `:` so that it can be plotted in TASK 4.
 
 ```{r}
-# >>> Fix this command
+# >>> Complete this command
 pancreas
 ```
 
@@ -181,18 +181,19 @@ The function `boxplot()` is used to build boxplots from numerical data. To plot 
 boxplot( pancreas[,1:24] )
 ```
 
-To better view the data, fix the command below to make boxplots from the log2(x+1) numerical data from the pancreas `data.frame`. 
+To better view the data, complete the command below to make boxplots from the log2(x+1) numerical data from the pancreas `data.frame`. 
 
 ```{r}
+# >>> Complete this command
 log2( pancreas[,1:24] + 1 )
 ```
 
 #### Make a barplot for numbers of genes with zero and nonzero values for each sample
 
-For every sample in the pancreas `data.frame`, there are multiple genes with no expression (i.e. value = 0). In order to plot how many genes with no expression we see for each sample, we must use logical indexing to focus on entries that match our criteria. We will use `colSums()` to count the number of instances where a value is = 0 in the pancreas `data.frame`, and assign the resulting data to the name "pan_zero". Change the code below to assign the resulting data to the name "pan_zero".
+For every sample in the pancreas `data.frame`, there are multiple genes with no expression (i.e. value = 0). In order to plot how many genes with no expression we see for each sample, we must use logical indexing to focus on entries that match our criteria. We will use `colSums()` to count the number of instances where a value is = 0 in the pancreas `data.frame`, and assign the resulting data to the name "pan_zero". Change the code below to assign the resulting data to the name "pan_zero", as done previously in Task 1.
 
 ```{r}
-# >>> Fix this command
+# >>> Complete this command
 colSums( pancreas == 0 )
 ```
 
@@ -225,14 +226,13 @@ Build a barplot from the nonzero data.
 In order to compare mean gene expression values among samples, we need to know what cell type each sample is. By referencing the sra run table, we can figure out the cell type (called "source_name") for each sample (called "Run"). Fix the code to retrieve data from these two columns.
 
 ```{r}
-# >>> Fix this command
 sra["Run","source_name"]
 ```
 
 The mean across an entire row or specific samples across a row can be calculated using the function `rowMeans()`. By viewing the column order for each sample in the pancreas `data.frame`, we can choose the proper columns for finding the mean expression values for adult alpha cells and fetal alpha cells. Fix the code to assign the resulting list of means to the name "adult_alpha_means".
 
 ```{r}
-# >>> Fix this command
+# >>> Complete this command
 rowMeans(pancreas[,c(11,12,14,15,16,17)], na.rm = FALSE)
 ```
 
