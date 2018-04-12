@@ -236,6 +236,35 @@ The mean across an entire row or specific samples across a row can be calculated
 rowMeans(pancreas[,c(11,12,14,15,16,17)], na.rm = FALSE)
 ```
 
+While this gets us to the right answer, it may be inefficient for a larger dataset, especially if the dataset and annotation reference are not in the same order, as is the case with our pancreas `data.frame` and sra run table. One way to get around this is to select columns of interest based on the reference. We can do that by first assigning those columns with the source_name of "adult alpha cells" to a variable, "sra_alpha".
+```{r}
+sra_alpha <- sra$source_name == "adult alpha cells"
+```
+
+You can check to see that the proper rows were selected by viewing the variable, "sra_alpha"
+
+```{r}
+sra_alpha
+```
+
+Retrieve the associated rows from the sra table as you would subset any set of columns with single square brackets.
+
+```{r}
+sra[sra_alpha,]
+```
+
+Find the associated sample IDs (called "Run") in the sra, and assign it to the variable, "coi". These correspond to the columns in the pancreas `data.frame`.
+
+```{r}
+coi <- sra[sra_alpha,]$Run
+```
+
+finally, use `rowMeans()` to find the average gene expression level across only the alpha adult cell types (assigned to "coi" in the last step) and assign it to the variable, "adult_alpha_means".
+
+```{r}
+adult_alpha_means <- rowMeans(pancreas[,coi], na.rm = FALSE)
+```
+
 To calculate the row means for the fetal alpha cell expression values, find the row means for the fetal alpha cell columns (7,8,9,10,13) and assign it to the name "fetal_alpha_means", just as above.
 
 ```{r}
