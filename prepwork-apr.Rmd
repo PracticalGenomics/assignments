@@ -209,13 +209,13 @@ Build a barplot using the function `barplot()` for the pan_zero data.
 barplot( pan_zero )
 ```
 
-In the same way as above, assign the numbers of instances a column has nonzero values to the name "pan_nonzero".
+In the same way as above, assign the numbers of instances a column has greater than zero values to the name "pan_greaterthanzero".
 
 ```{r}
 # >>> Place your answer below
 ```
 
-Build a barplot from the nonzero data.
+Build a barplot from the greater than zero data.
 
 ```{r}
 # >>> Place your answer below
