@@ -265,13 +265,13 @@ finally, use `rowMeans()` to find the average gene expression level across only 
 adult_alpha_means <- rowMeans(pancreas[,coi], na.rm = FALSE)
 ```
 
-To calculate the row means for the fetal alpha cell expression values, find the row means for the fetal alpha cell columns (7,8,9,10,13) and assign it to the name "fetal_alpha_means", just as above.
+To calculate the row means for the fetal alpha cell expression values, use the same technique just described using the source_name "fetal alpha cells" from the sra run table. Assign the final result to the variable, "fetal_alpha_means".
 
 ```{r}
 # >>> Place your answer below
 ```
 
-We can make a scatterplot of these means using the function `plot()`. Using `main=` we can name the plot, and we are also labeling the datapoints with the row number in order to quickly find gene names that show an obvious difference in expression.
+Finally, we can make a scatterplot of these means using the function `plot()`. Using `main=` we can name the plot, and we are also labeling the datapoints with the row number in order to quickly find gene names that show an obvious difference in expression.
 
 ```{r}
 plot( adult_alpha_means,
