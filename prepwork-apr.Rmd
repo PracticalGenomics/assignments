@@ -271,7 +271,7 @@ To calculate the row means for the fetal alpha cell expression values, use the s
 # >>> Place your answer below
 ```
 
-Finally, we can make a scatterplot of these means using the function `plot()`. Using `main=` we can name the plot, and we are also labeling the datapoints with the row number in order to quickly find gene names that show an obvious difference in expression.
+Finally, we can make a scatterplot of these means using the function `plot()`. Using `main=` we can name the plot, and we are also labeling the datapoints with the row number in order to quickly find gene names that show an obvious difference in expression. (note: Due to the size of the `data.frame`, this may take some time.)
 
 ```{r}
 plot( adult_alpha_means,
