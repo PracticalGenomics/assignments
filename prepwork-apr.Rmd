@@ -209,7 +209,7 @@ Build a barplot using the function `barplot()` for the pan_zero data.
 barplot( pan_zero )
 ```
 
-In the same way as above, assign the numbers of instances a column has greater than zero values to the name "pan_greaterthanzero".
+In the same way as above, assign the numbers of instances a column has greater than zero values to the name "pan_greaterthanzero". (note:  a warning will arise due to the last column containing gene IDs instead of numerical values. You may proceed despite the warning. If you know how to prevent this warning by using single square brackets to define the numerical portion of the pancreas `data.frame`, you may also do that.)
 
 ```{r}
 # >>> Place your answer below
