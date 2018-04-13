@@ -271,7 +271,16 @@ To calculate the row means for the fetal alpha cell expression values, use the s
 # >>> Place your answer below
 ```
 
-Finally, we can make a scatterplot of these means using the function `plot()`. Using `main=` we can name the plot, and we are also labeling the datapoints with the row number in order to quickly find gene names that show an obvious difference in expression. (note: Due to the size of the `data.frame`, this may take some time.)
+Finally, we can make a scatterplot of these means using the function `plot()`. Using `main=` we can name the plot, and using `text()`, we can label the axes. 
+
+```{r}
+plot( adult_alpha_means,
+      fetal_alpha_means,
+      main = "Adult alpha cells vs Fetal alpha cells", 
+      text(x=adult_alpha_means, y=fetal_alpha_means) )
+```
+
+To quickly find the gene associated with a particular datapoint, we can label the datapoints with the row number. (Note: Due to the size of the `data.frame`, this may take some time.)
 
 ```{r}
 plot( adult_alpha_means,
@@ -280,7 +289,7 @@ plot( adult_alpha_means,
       text(x=adult_alpha_means, y=fetal_alpha_means, labels=1:58037) )
 ```
 
-Although much of the data is difficult to visualize properly with this scale, we can use those points that already stand out to find the associated gene. Find the ensembl gene id associated with row 4393. (hint: the ensembl gene id is in the last column of the pancreas `data.frame`)
+Although much of the data is difficult to visualize properly with this scale, we can use those points that already stand out to find the associated gene. Find the ensembl gene id associated with row 4393. (Hint: the ensembl gene id is in the last column of the pancreas `data.frame`)
 
 ```{r}
 # >>> Place your answer below
