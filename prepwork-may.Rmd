@@ -141,7 +141,7 @@ pancreas[c(999,1066),]
 We can use logical operators to subset our `data.frame`. For a logical equality, we must use a double equal sign `==`, which means "exactly equal to".
 
 23) Subset the sra `data.frame` to only include those rows that contain samples that are beta cells. We can refer to the column name "tissue" from the sra `data.frame` using $. In the same step, assign the subsetted data to the variable beta_cell_samples. 
-24) Visualize beta_cell_samples by typing its name
+24) Visualize beta_cell_samples by typing its name. 
 ```{r}
 beta_cell_samples <- sra$tissue == "beta cells"
 #Place your answer for 24 in the line below
@@ -149,7 +149,7 @@ beta_cell_samples <- sra$tissue == "beta cells"
 ```
 
 25) Using the same method, subset the sra `data.frame` to only include those rows that contai samples that come from an adult. Refer to the column name "developmental_stage" from the sra `data.frame` using $. In the same step, assign the subsetted data to the variable adult_cell_samples.
-26) Visualize adult_cell_samples
+26) Visualize adult_cell_samples. Besides typing the name of the variable containing the data you wish to visualize, you can visualize the results of a command you just typed by placing the entire command in parentheses. For this answer, copy your command and add parentheses around it.
 ```{r}
 #Place your answer for 25-26 in the 2 lines below
 
@@ -266,7 +266,7 @@ Notice the differences between this boxplot and the boxplot you made in problem 
 
 47) We are interested specifically in those samples containing adult beta cells. Use the == operator to find only those rows with the source_name "adult beta cells" in the sra `data.frame`. Assign it to the name sra_adult_beta.
 48) Visualize sra_adult_beta to be sure it outputs what you expect.
-49) Find the associated Run from the sra table for those samples that are adult beta cells. Assign this subset to the name coi.
+49) Find the associated Run from the sra table for those samples that are adult beta cells. Assign this subset to the name coi. 
 50) Visualize coi to be sure it outputs what you expect. 
 51) Make a boxplot log2(x+1) of the mean gene expression values (i.e.row mean values) using `rowMeans` across only those samples that are made up of adult beta cells.
 
