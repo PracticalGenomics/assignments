@@ -1,7 +1,7 @@
 ---
 title: "PG2018 - Preparation Assignment 2/3"
 author: "Melissa Keinath"
-date: "April 30, 2018"
+date: "May 9, 2018"
 output:
   html_notebook:
     toc: true
@@ -21,7 +21,7 @@ output:
 
 ## Assignment
 
-In this assignment, you will look through a gene expression dataset of highly purified human adult and developing fetal pancreatic a and b cells. (data from a project that led to this paper doi:10.2337/db15-0039) 
+In this assignment, you will once again use the gene expression dataset of highly purified human adult and developing fetal pancreatic a and b cells. (data from a project that led to this paper doi:10.2337/db15-0039) 
 
 - Task 1. Preparation: (re)load data & review 
 - Task 2. Subset data- some review, some new
@@ -29,34 +29,41 @@ In this assignment, you will look through a gene expression dataset of highly pu
 - Task 4. Manipulate data based on rows and columns
 
 
-## TASK 1: Preparation: (re)load data & review
+## TASK 1: Preparation--(re)load data & review
 
 #### Working space 
+
 As done in our first assignment, we need to choose the working space where our work and data will be stored, then we need to download and load data. (We are using the same data as HW#1.) Before starting your last assignment, you made a new folder called "PG2018" on your computer's desktop. Use `getwd()` (get working directory) to determine where you are working and where your data will be saved. Don't forget: this function has no arguments. If you are not working in your PG2018 folder on your desktop, use the function `setwd()` (set working directory) to provide a path to the PG2018 folder.
+
 ```{r}
 # NOTE: For Windows computers, you will need to use \\ or / instead of \. For mac users, ~/Desktop/PG2018
 getwd()
 ```
 
 #### Understand formatting in RMarkdown; using chunks
+
 In RMarkdown, you can write code in chunks. Code that will be run must have 3 back ticks ``` and {r} before the code starts, and after the code, 3 more back ticks, indicating the end of the code. That means you can put multiple commands in one chunk as long as you maintain the formatting. If you want to add a comment (a string of words that is not code, called a comment; use a pound sign before it) Check out this site for some details: (https://earthdatascience.org/courses/earth-analytics/document-your-science/rmarkdown-code-chunks-comments-knitr/) For the rest of the assignment, you will have multiple commands running in a single chunk. 
 
 #### Obtain data, assign it to a variable and view it
+
 If you haven't already, download and load the pancreatic dataset from the recount2 repository. In the same chunk, you will write code for the following commands in order:
 
 1) Use the function `download.file()` and the website "http://idies.jhu.edu/recount/data/v2/SRP056835/counts_gene.tsv.gz" to download "SRP056835.tsv.gz". 
 2) Use `read.table()` to assign the `data.frame` to the name "pancreas" (Don't forget: the file has headers)
 3) Use `tail()` to visualize the end of the pancreas `data.frame` 
+
 ```{r}
 download.file( "http://idies.jhu.edu/recount/data/v2/SRP056835/counts_gene.tsv.gz", "SRP056835.tsv.gz" )
 pancreas <- read.table( "SRP056835.tsv.gz", header=TRUE )
 tail(pancreas)
 ```
+
 Notice that when you run the full chunk, you will see 2 windows: One showing "R Console" results of downloading the file, and one showing the end of the pancreatic dataset. Now do the same with the SRA file by following the steps below in your next chunk of code. 
 
 4) Download and load the associated SRA run table "SraRunTable.txt" from "http://practicalgenomics.github.io/data/SraRunTable.txt" 
 5) Assign the `data.frame` to the name "sra" (Don't forget: the file has headers and is tab-delimited)
 6) View the entire sra file
+
 ```{r}
 #Place your answer to 4-6 on the next 3 lines below
 
@@ -64,7 +71,8 @@ Notice that when you run the full chunk, you will see 2 windows: One showing "R 
 
 ```
 
-####Look at the data
+#### Look at the data
+
 When you look at your data, you should ask yourself a few things: 
 What type of data is this? 
 How many rows and columns does it have? 
@@ -75,40 +83,47 @@ Write code for the following commands in a single chunk to answer these question
 7) Use the function `class()` for pancreatic dataset to determine what type of data it is.
 8) Use the function `dim()` to find the number of rows and columns in pancreas.
 9) Use the function `head()` to view the first few lines of pancreas. 
+
 ```{r}
 class(pancreas)
 #Place your answers for 8-9 in the 2 lines below
 
 
 ```
+
 10) What type of data is the sra dataset? Use the same function as above to find out.
 11) Find the number of rows and columns in sra. 
 12) View the first few lines of sra.
+
 ```{r}
 # Place your answers for 11-12 below
 
 
 ```
 
-####Summarize
+#### Summarize
+
 There are several ways to look at summaries of the data within a `data.frame`. Two ways you might consider when initially looking at your data are using the functions `summary()` and `str()`. `summary()` provides the mean, median, 25th and 75th quartiles, minimum and maximum for each column and `str()` displays the internal structure of an R object in a compact way, showing only one line for each structure.
 
 13) Use the function `summary()` to summarize the data from the pancreas `data.frame`.
 14) Use the function `str()` to summarize the data from the pancreas `data.frame`.  
+
 ```{r}
 #Place your answers for 13-14 in the 2 lines below
 
 
 ```
 
-## TASK 2 SUBSET DATA- some review, some new
+## TASK 2: Subset data--some review, some new
 
-####Retrieving cells, rows and columns
+#### Retrieving cells, rows and columns
+
 In the last assignment, you learned how to retrieve single and multiple cells, rows and columns. Before we get to some new functions for subsetting, let's recall some basics. 
 
 15) Retrieve a single cell from the pancreas `data.frame`, using the name of the `data.frame` and single square brackets containing [row#,col#]. View a single cell from row 18067, column 18.
 16) Retrieve an entire row record from the pancreas `data.frame` by using single square brackets and a comma to wildcard match the column number. Retrieve the 27th row record. 
 17) Retrieve column 10 from the pancreas `data.frame` using single square brackets and a comma as a wildcard to match the row number. 
+
 ```{r}
 pancreas[18067,18]
 # Place your answers for 16-17 in the 2 lines below
@@ -124,6 +139,7 @@ pancreas[18067,18]
 
 
 ```
+
 To retrieve multiple row records or columns, we use `c()` within the single square brackets.
 
 20) Retrieve rows 999 and 1066 from the pancreas `data.frame`.
@@ -137,11 +153,13 @@ pancreas[c(999,1066),]
 
 ```
 
-####Logical operators in R
+#### Logical operators in R
+
 We can use logical operators to subset our `data.frame`. For a logical equality, we must use a double equal sign `==`, which means "exactly equal to".
 
 23) Subset the sra `data.frame` to only include those rows that contain samples that are beta cells. We can refer to the column name "tissue" from the sra `data.frame` using $. In the same step, assign the subsetted data to the variable beta_cell_samples. 
 24) Visualize beta_cell_samples by typing its name. 
+
 ```{r}
 beta_cell_samples <- sra$tissue == "beta cells"
 #Place your answer for 24 in the line below
@@ -150,6 +168,7 @@ beta_cell_samples <- sra$tissue == "beta cells"
 
 25) Using the same method, subset the sra `data.frame` to only include those rows that contai samples that come from an adult. Refer to the column name "developmental_stage" from the sra `data.frame` using $. In the same step, assign the subsetted data to the variable adult_cell_samples.
 26) Visualize adult_cell_samples. Besides typing the name of the variable containing the data you wish to visualize, you can visualize the results of a command you just typed by placing the entire command in parentheses. For this answer, copy your command and add parentheses around it.
+
 ```{r}
 #Place your answer for 25-26 in the 2 lines below
 
@@ -160,6 +179,7 @@ We can use another logical operator to find which rows are in both datasets. The
 
 27) Use the & operator to find in which rows the value is TRUE for both of the subsets (in other words, which rows were marked TRUE for being beta cells in beta_cell_samples and TRUE for being adult cells in adult_cell_samples). Assign it to the variable adult_beta_cells
 28) Visualize adult_beta_cells
+
 ```{r}
 adult_beta_cell_samples <- beta_cell_samples & adult_cell_samples
 #Place your answer for 28 in the line below
@@ -167,6 +187,7 @@ adult_beta_cell_samples <- beta_cell_samples & adult_cell_samples
 ```
 
 29) Now use adult_beta_cell_samples to subset the sra `data.frame` to keep only those samples that are both adult cells and beta cells.
+
 ```{r}
 #Place your answer for 29 in the line below
 
@@ -177,6 +198,7 @@ Another logical operator `|` means "OR", and it combines each element of the fir
 30) Use the | operator to find in which rows the value is TRUE in at least one of the 2 subsets (in other words, which rows were marked TRUE for being beta cells in beta_cell_samples OR adult cells in adult_cell_samples). Assign it to the variable adult_or_beta_cell_samples.
 31) Visualize adult_or_beta_cell_samples.
 32) Use adult_or_beta_cell_samples to subset the sra `data.frame` to keep only those samples that are either adult cells or beta cells.
+
 ```{r}
 adult_or_beta_cell_samples <- beta_cell_samples | adult_cell_samples
 #Place your answer for 31-32 in the 2 lines below
@@ -186,24 +208,28 @@ adult_or_beta_cell_samples <- beta_cell_samples | adult_cell_samples
 
 33) Subset the sra `data.frame` for rows that contain adult alpha cells or adult beta cells in the column labeled source_name.
 34) Visualize not_quite_right
+
 ```{r}
 # We are purposefully making a mistake here; no need to correct the code.
 not_quite_right <- sra$source_name == c( "adult alpha cells", "adult beta cells" )
 #Place your answer for 34 in the line below
 ```
+
 Even when R runs a command successfully, it's important to understand the code so that you don't trust data that has been improperly created. The logical operator == compares if two things are exactly equal. If the vectors are of equal length, elements will be compared element-wise. If not, vectors will be recycled. The length of output will be equal to the length of the longer vector. In this case, the recycling of vectors causes the return of only 6 samples, which is incorrect. Enters the operator `%in%`, which can be used to match a list of criteria from a column.
 
 35) Replace the `==` in the code below with a `%in%` to subset the sra `data.frame` for rows that contain adult alpha cells or adult beta cells in the column labeled source_name. Assign it to the name adult_cells.
 36) Visualize adult_cells.
+
 ```{r}
 adult_cells <- sra$source_name %in% c( "adult alpha cells", "adult beta cells" )
 #Place your answer for 36 in the line below
 
 ```
 
-## TASK 3 Troubleshoot error messages
+## TASK 3: Troubleshoot error messages
 
-### List of common errors and what they mean
+#### List of common errors and what they mean
+
 A) ‘could not find function’ = typo/misspelling OR R package not loaded properly
 B) ‘error in eval‘ = references to objects that don't exist
 C) ‘object not found’ = variable “object” is empty
@@ -214,6 +240,7 @@ F) package error- unable to install, compile or load, maybe because of dependenc
 Oh, no! I have written some code in response to several prompts, but I'm getting some errors. Please help! To complete this task, you will run my code and receive an error. You'll find this error in the list above (A-F). You'll do 2 things: Add a comment (using `#`) on the line beneath the code (but before the end of the chunk marked by ```) and below that, fix my code so that it runs properly without errors.
 
 37) Report (TRUE/FALSE) if the gene expression values in sample SRR1951552 of the pancreas `data.frame` are greater than 0.
+
 ```{r}
 SRR1951552>0
 # This is a comment. Type the error here.
@@ -222,6 +249,7 @@ SRR1951552>0
 ```
 
 38) Use the function `boxplot()` to build a boxplot from the log2(x+1) of the expression values in the pancreas `data.frame`.
+
 ```{r}
 boxplot(log2( pancreas + 1 ))
 #Comment error here and type proper code below
@@ -229,27 +257,31 @@ boxplot(log2( pancreas + 1 ))
 ```
 
 39) Use the function `boxplot()` to build a boxplot from the log2(x+1) of the expression values in the pancreas `data.frame`. 
+
 ```{r}
 boxpolt(log2( pancreas[,1:24] + 1 ))
 #Comment error here and type proper code below
 
 ```
 
-## TASK 4 Manipulate data based on rows and columns
+## TASK 4: Manipulate data based on rows and columns
 
 40) We are interested in only those genes for which both samples SRR1951541 and SRR1951542 have gene expression values greater than zero. First, report TRUE/FALSE for genes (rows) where this is the case using the `&` operator. Assign it to the name "both_greaterthanzero".
 41) Subset the pancreas `data.frame` where both SRR1951541 and SRR1951542 have gene expression values greater than zero. Assign it to the name "both_greaterthanzero_all_data".
 42) Build a boxplot from the log2(x+1) of the expression values across all samples where SRR1951541 and SRR1951542 have a gene expression value greater than zero.
+
 ```{r}
 both_greaterthanzero <- pancreas$SRR1951541>0 & pancreas$SRR1951542>0
 both_greaterthanzero_all_data <- pancreas[both_greaterthanzero,]
 boxplot(log2(both_greaterthanzero_all_data[,1:24]+1))
 ```
+
 Notice the differences between this boxplot and the boxplot you made in problem 39.
 
 43) We are interested in only those genes for which both samples SRR1951541 or SRR1951542 have gene expression values greater than zero. First, report TRUE/FALSE for genes (rows) where this is the case using the `|` operator. Assign it to the name "one_greaterthanzero".
 44) Subset the pancreas `data.frame` where both SRR1951541 and SRR1951542 have gene expression values greater than zero. Assign it to the name "both_greaterthanzero_all_data".
 45) Build a boxplot from the log2(x+1) of the expression values across all samples where SRR1951541 and SRR1951542 have a gene expression value greater than zero.
+
 ```{r}
 #Place answers to 43-45 below
 
@@ -258,6 +290,7 @@ Notice the differences between this boxplot and the boxplot you made in problem 
 ```
 
 46) It is likely the case that when you are more stringent, requiring both samples (SRR1951541 and SRR1951542) to have greater than zero expression values, you will create a smaller subsetted dataset than if you only require one of the samples to have a greater than zero expression value. Check this by finding the number of columns and rows in both subsetted datasets (both_greaterthanzero_all_data and one_greaterthanzero_all_data) to see if your expectation is true. Use the function `dim()` as you did in Task 1.
+
 ```{r}
 #Place your answers to 46 on the two lines below
 
@@ -279,6 +312,7 @@ boxplot(log2(rowMeans(pancreas[,as.character(coi)],na.rm=FALSE)+1))
 ```
 
 51) SRR1951541 and SRR1951542 are both adult beta cell samples. Now we would like to combine our efforts for subsetting rows and columns by building a boxplot log2(x+1) of the mean gene expression values for only adult beta cell samples and only for genes where SRR1951541 and SRR1951542 have expression values >0. (hint: use code from the last several questions to guide your answer).
+
 ```{r}
 #Place your answers to 51 in the lines below
 
