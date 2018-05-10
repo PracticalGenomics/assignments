@@ -42,15 +42,15 @@ getwd()
 
 #### Understand formatting in RMarkdown; using chunks
 
-In RMarkdown, you can write code in chunks. Code that will be run must have 3 back ticks ``` and {r} before the code starts, and after the code, 3 more back ticks, indicating the end of the code. That means you can put multiple commands in one chunk as long as you maintain the formatting. If you want to add a comment (a string of words that is not code, called a comment; use a pound sign before it) Check out this site for some details: (https://earthdatascience.org/courses/earth-analytics/document-your-science/rmarkdown-code-chunks-comments-knitr/) For the rest of the assignment, you will have multiple commands running in a single chunk. 
+In RMarkdown, you can write code in chunks. Code that will be run must have 3 back ticks and {r} before the code starts, and after the code, 3 more back ticks, indicating the end of the code. That means you can put multiple commands in one chunk as long as you maintain the formatting. If you want to add a comment (a string of words that is not code, called a comment; use a pound sign before it) Check out this site for some details: (https://earthdatascience.org/courses/earth-analytics/document-your-science/rmarkdown-code-chunks-comments-knitr/) For the rest of the assignment, you will have multiple commands running in a single chunk. 
 
-#### Obtain data, assign it to a variable and view it
+#### Obtain data, assign it to a variable and examine it
 
 If you haven't already, download and load the pancreatic dataset from the recount2 repository. In the same chunk, you will write code for the following commands in order:
 
 1) Use the function `download.file()` and the website "http://idies.jhu.edu/recount/data/v2/SRP056835/counts_gene.tsv.gz" to download "SRP056835.tsv.gz". 
 2) Use `read.table()` to assign the `data.frame` to the name "pancreas" (Don't forget: the file has headers)
-3) Use `tail()` to visualize the end of the pancreas `data.frame` 
+3) Use `tail()` to examine the end of the pancreas `data.frame` 
 
 ```{r}
 download.file( "http://idies.jhu.edu/recount/data/v2/SRP056835/counts_gene.tsv.gz", "SRP056835.tsv.gz" )
@@ -62,7 +62,7 @@ Notice that when you run the full chunk, you will see 2 windows: One showing "R 
 
 4) Download and load the associated SRA run table "SraRunTable.txt" from "http://practicalgenomics.github.io/data/SraRunTable.txt" 
 5) Assign the `data.frame` to the name "sra" (Don't forget: the file has headers and is tab-delimited)
-6) View the entire sra file
+6) Examine the entire sra file
 
 ```{r}
 #Place your answer to 4-6 on the next 3 lines below
@@ -82,7 +82,7 @@ Write code for the following commands in a single chunk to answer these question
 
 7) Use the function `class()` for pancreatic dataset to determine what type of data it is.
 8) Use the function `dim()` to find the number of rows and columns in pancreas.
-9) Use the function `head()` to view the first few lines of pancreas. 
+9) Use the function `head()` to examine the first few lines of pancreas. 
 
 ```{r}
 class(pancreas)
@@ -93,7 +93,7 @@ class(pancreas)
 
 10) What type of data is the sra dataset? Use the same function as above to find out.
 11) Find the number of rows and columns in sra. 
-12) View the first few lines of sra.
+12) Examine the first few lines of sra.
 
 ```{r}
 # Place your answers for 11-12 below
@@ -158,7 +158,7 @@ pancreas[c(999,1066),]
 We can use logical operators to subset our `data.frame`. For a logical equality, we must use a double equal sign `==`, which means "exactly equal to".
 
 23) Subset the sra `data.frame` to only include those rows that contain samples that are beta cells. We can refer to the column name "tissue" from the sra `data.frame` using $. In the same step, assign the subsetted data to the variable beta_cell_samples. 
-24) View beta_cell_samples by typing its name. 
+24) Examine beta_cell_samples by typing its name. 
 
 ```{r}
 beta_cell_samples <- sra$tissue == "beta cells"
@@ -167,7 +167,7 @@ beta_cell_samples <- sra$tissue == "beta cells"
 ```
 
 25) Using the same method, subset the sra `data.frame` to only include those rows that contai samples that come from an adult. Refer to the column name "developmental_stage" from the sra `data.frame` using $. In the same step, assign the subsetted data to the variable adult_cell_samples.
-26) View adult_cell_samples. Besides typing the name of the variable containing the data you wish to visualize, you can view the results of a command you just typed by placing the entire command in parentheses. For this answer, copy your command and add parentheses around it.
+26) Examine adult_cell_samples. Besides typing the name of the variable containing the data you wish to visualize, you can view the results of a command you just typed by placing the entire command in parentheses. For this answer, copy your command and add parentheses around it.
 
 ```{r}
 #Place your answer for 25-26 in the 2 lines below
@@ -178,7 +178,7 @@ beta_cell_samples <- sra$tissue == "beta cells"
 We can use another logical operator to find which rows are in both datasets. The operator `&` means "AND", and it combines each element of the first vector with the corresponding element of the second vector and gives the output TRUE only if both elements are TRUE. 
 
 27) Use the & operator to find in which rows the value is TRUE for both of the subsets (in other words, which rows were marked TRUE for being beta cells in beta_cell_samples and TRUE for being adult cells in adult_cell_samples). Assign it to the variable adult_beta_cells
-28) View adult_beta_cells
+28) Examine adult_beta_cells
 
 ```{r}
 adult_beta_cell_samples <- beta_cell_samples & adult_cell_samples
@@ -196,7 +196,7 @@ adult_beta_cell_samples <- beta_cell_samples & adult_cell_samples
 Another logical operator `|` means "OR", and it combines each element of the first vector with the corresponding element of the second vector and gives an output TRUE if at least one element is TRUE.
 
 30) Use the | operator to find in which rows the value is TRUE in at least one of the 2 subsets (in other words, which rows were marked TRUE for being beta cells in beta_cell_samples OR adult cells in adult_cell_samples). Assign it to the variable adult_or_beta_cell_samples.
-31) View adult_or_beta_cell_samples.
+31) Examine adult_or_beta_cell_samples.
 32) Use adult_or_beta_cell_samples to subset the sra `data.frame` to keep only those samples that are either adult cells or beta cells.
 
 ```{r}
@@ -207,7 +207,7 @@ adult_or_beta_cell_samples <- beta_cell_samples | adult_cell_samples
 ```
 
 33) Subset the sra `data.frame` for rows that contain adult alpha cells or adult beta cells in the column labeled source_name.
-34) View not_quite_right
+34) Examine not_quite_right
 
 ```{r}
 # We are purposefully making a mistake here; no need to correct the code.
@@ -218,7 +218,7 @@ not_quite_right <- sra$source_name == c( "adult alpha cells", "adult beta cells"
 Even when R runs a command successfully, it's important to understand the code so that you don't trust data that has been improperly created. The logical operator == compares if two things are exactly equal. If the vectors are of equal length, elements will be compared element-wise. If not, vectors will be recycled. The length of output will be equal to the length of the longer vector. In this case, the recycling of vectors causes the return of only 6 samples, which is incorrect. Enters the operator `%in%`, which can be used to match a list of criteria from a column.
 
 35) Replace the `==` in the code below with a `%in%` to subset the sra `data.frame` for rows that contain adult alpha cells or adult beta cells in the column labeled source_name. Assign it to the name adult_cells.
-36) View adult_cells.
+36) Examine adult_cells.
 
 ```{r}
 adult_cells <- sra$source_name %in% c( "adult alpha cells", "adult beta cells" )
@@ -237,7 +237,7 @@ D) ‘cannot open’ / ‘cannot open the connection’ = error in path
 E) ‘non-numeric variable in data frame’ = character used where number expected
 F) package error- unable to install, compile or load, maybe because of dependency/update
 
-Oh, no! I have written some code in response to several prompts, but I'm getting some errors. Please help! To complete this task, you will run my code and receive an error. You'll find this error in the list above (A-F). You'll do 2 things: Add a comment (using `#`) on the line beneath the code (but before the end of the chunk marked by ```) and below that, fix my code so that it runs properly without errors.
+Oh, no! I have written some code in response to several prompts, but I'm getting some errors. Please help! To complete this task, you will run my code and receive an error. You'll find this error in the list above (A-F). You'll do 2 things: Add a comment (using `#`) on the line beneath the code (but before the end of the chunk marked by 3 back ticks) and below that, fix my code so that it runs properly without errors.
 
 37) Report (TRUE/FALSE) if the gene expression values in sample SRR1951552 of the pancreas `data.frame` are greater than 0.
 
@@ -298,9 +298,9 @@ Notice the differences between this boxplot and the boxplot you made in problem 
 ```
 
 47) We are interested specifically in those samples containing adult beta cells. Use the == operator to find only those rows with the source_name "adult beta cells" in the sra `data.frame`. Assign it to the name sra_adult_beta.
-48) View sra_adult_beta to be sure it outputs what you expect.
+48) Examine sra_adult_beta to be sure it outputs what you expect.
 49) Find the associated Run from the sra table for those samples that are adult beta cells. Assign this subset to the name coi. 
-50)  When R stores coi, it is stored as a factor. A factor is a set of numeric codes with character-valued levels. When manipulating dataframes, character vectors and factors are treated very differently, and in this case, we need coi to be a character. Use `as.character()` so that coi will be used as a character instead of a factor. View coi to be sure it outputs what you expect. 
+50)  When R stores coi, it is stored as a factor. A factor is a set of numeric codes with character-valued levels. When manipulating dataframes, character vectors and factors are treated very differently, and in this case, we need coi to be a character. Use `as.character()` so that coi will be used as a character instead of a factor. Examine coi to be sure it outputs what you expect. 
 51) Make a boxplot log2(x+1) of the mean gene expression values (i.e.row mean values) using `rowMeans` across only those samples that are made up of adult beta cells.
 
 ```{r}
