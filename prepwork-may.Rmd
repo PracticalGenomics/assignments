@@ -278,9 +278,9 @@ boxplot(log2(both_greaterthanzero_all_data[,1:24]+1))
 
 Notice the differences between this boxplot and the boxplot you made in problem 39.
 
-43) We are interested in only those genes for which both samples SRR1951541 or SRR1951542 have gene expression values greater than zero. First, report TRUE/FALSE for genes (rows) where this is the case using the `|` operator. Assign it to the name "one_greaterthanzero".
-44) Subset the pancreas `data.frame` where both SRR1951541 and SRR1951542 have gene expression values greater than zero. Assign it to the name "both_greaterthanzero_all_data".
-45) Build a boxplot from the log2(x+1) of the expression values across all samples where SRR1951541 and SRR1951542 have a gene expression value greater than zero.
+43) We are interested in only those genes for which either sample SRR1951541 or sample SRR1951542 have gene expression values greater than zero. First, report TRUE/FALSE for genes (rows) where this is the case using the `|` operator. Assign it to the name "one_greaterthanzero".
+44) Subset the pancreas `data.frame` where at least one sample (SRR1951541 and SRR1951542) have gene expression values greater than zero. Assign it to the name "one_greaterthanzero_all_data".
+45) Build a boxplot from the log2(x+1) of the expression values across all samples where at least one sample (SRR1951541 or SRR1951542) have a gene expression value greater than zero.
 
 ```{r}
 #Place answers to 43-45 below
