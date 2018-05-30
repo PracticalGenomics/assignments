@@ -1,7 +1,7 @@
 ---
 title: "PG2018 - Preparation Assignment 3/3"
 author: "Melissa Keinath"
-date: "April 30, 2018"
+date: "June 4, 2018"
 output:
   html_notebook:
     toc: true
@@ -31,6 +31,7 @@ In this assignment, you will look through a gene expression dataset of highly pu
 ## TASK 1: PREPARATION: (re)load data & review
 
 #### Working space 
+
 As done in the first two assignments, we need to choose the working space where our work and data will be stored, then we need to download and load data. (We are using the same data as HW#1 and 2.) You previously made a folder called "PG2018" on your computer's desktop. Use `getwd()` (get working directory) to determine where you are working and where your data will be saved. Don't forget: this function has no arguments. If you are not working in your PG2018 folder on your desktop, use the function `setwd()` (set working directory) to provide a path to the PG2018 folder.
 
 ```{r}
@@ -39,11 +40,14 @@ As done in the first two assignments, we need to choose the working space where 
 ```
 
 #### Understand formatting in RMarkdown; using chunks
+
 In RMarkdown, you can write code in chunks. Code that will be run must have 3 back ticks ``` and {r} before the code starts, and after the code, 3 more back ticks, indicating the end of the code. That means you can put multiple commands in one chunk as long as you maintain the formatting. If you want to add a "comment"" (a string of words that is not code; use a pound sign before it) This site has more details if you didn't check it out during HW#2: (https://earthdatascience.org/courses/earth-analytics/document-your-science/rmarkdown-code-chunks-comments-knitr/) 
 For the rest of the assignment, you will have multiple commands running in a single chunk. 
 
-####Look at the data
+#### Look at the data
+
 If you completed the first two assignments, you will already have the data downloaded and stored as "pancreas" and "sra". 
+
 1) Use `tail()` to view the end of the pancreas `data.frame` 
 2) Use `tail()` to view the end of the sra `data.frame`
 
@@ -52,6 +56,7 @@ If you completed the first two assignments, you will already have the data downl
 ```
 
 If you have the proper output, proceed to number 9. If you received an error because the data is not downloaded, download and load the pancreatic dataset from the recount2 repository using the following steps:
+
 3) Use the function `download.file()` and the website "http://idies.jhu.edu/recount/data/v2/SRP056835/counts_gene.tsv.gz" to download "SRP056835.tsv.gz". 
 4) Use `read.table()` to assign the `data.frame` to the name "pancreas" (Don't forget: the file has headers)
 5) Use `tail()` to view the end of the pancreas `data.frame` 
@@ -61,6 +66,7 @@ If you have the proper output, proceed to number 9. If you received an error bec
 ```
 
 Now do the same with the SRA file by following the steps below in your next chunk of code:
+
 6) Download and load the associated SRA run table "SraRunTable.txt" from "http://practicalgenomics.github.io/data/SraRunTable.txt" 
 7) Assign the `data.frame` to the name "sra" (Don't forget: the file has headers and is tab-delimited)
 8) Use `tail()` to view the end of the sra `data.frame`
@@ -76,6 +82,7 @@ How many rows and columns does it have?
 What are the first few lines? 
 
 Write code for the following commands in a single chunk to answer these questions about the data you downloaded: 
+
 9) Use the function `class()` for pancreatic dataset to determine what type of data it is.
 10) Use the function `dim()` to find the number of rows and columns in pancreas.
 11) Use the function `head()` to view the first few lines of pancreas. 
@@ -92,7 +99,7 @@ Write code for the following commands in a single chunk to answer these question
 #Type your commands here
 ```
 
-####Summarize data
+#### Summarize data
 In HW#2, you used `summary()` and `str()` to summarize the pancreatic dataset. You might remember that the function `summary()` provides the mean, median, 25th and 75th quartiles, minimum and maximum for each column and `str()` displays the internal structure of an R object in a compact way, showing only one line for each structure.
 
 15) Use the function `summary()` to summarize the data from the pancreas `data.frame`.
@@ -104,7 +111,8 @@ In HW#2, you used `summary()` and `str()` to summarize the pancreatic dataset. Y
 
 ## TASK 2 SUBSET DATA: review
 
-####Retrieving cells, rows and columns
+#### Retrieving cells, rows and columns
+
 Back to the basics. 
 
 17) Retrieve a single cell from the pancreas `data.frame`, using the name of the `data.frame` and single square brackets containing [row#,col#]. View a single cell from row 2150, column 11.
@@ -116,6 +124,7 @@ Back to the basics.
 ```
 
 Multiple rows/columns:
+
 20) Retrieve rows 1040 and 19842 from the pancreas `data.frame` using the `c()` within the single square brackets.
 21) Retrieve columns 6 and 12 from the pancreas `data.frame`.
 22) Retrieve columns 6-12 from the pancreas `data.frame` using the `:` instead of `c()`.
@@ -131,7 +140,8 @@ Multiple rows/columns:
 #Type your commands here
 ```
 
-####Logical operators review
+#### Logical operators review
+
 In the last assignment, we used logical operater to subset our `data.frame`. 
 
 25) Subset the sra `data.frame` to only include those rows that contain samples that are alpha cells. We can refer to the column name "tissue" from the sra `data.frame` using $. In the same step, assign the subsetted data to the variable alpha_cell_samples. (Don't forget: for a logical equality, we use a double equal sign `==`, which means "exactly equal to")
@@ -154,11 +164,11 @@ adult_alpha_cell_samples <- alpha_cell_samples & adult_cell_samples
 sra[ adult_alpha_cell_samples, ]
 ```
 
-##TASK 3 PLOTTING
+## TASK 3 PLOTTING
 
 In the last two assignments, you were exposed to plotting in a basic way. In this assignment, you will use different options to change the look of your plots. Many of the basic plot commands accept the same options, and you can use `help(plot)` to find what those options are. 
 
-####Boxplots
+#### Boxplots
 
 32) Use `boxplot()` to build a boxplot of the log2(x+1) from columns 1-24 of the pancreas `data.frame`.
 
@@ -167,6 +177,7 @@ boxplot(log2(pancreas[1:24]+1))
 ```
 
 Now we want to add some features to the boxplot.
+
 33) Add a title to the boxplot by adding a comma and `main= Gene expression across pancreatic cells"` within the `boxplot()`
 
 ```{r}
@@ -197,6 +208,7 @@ boxplot(log2(pancreas[,as.character(coi)]+1),na.rm=FALSE)
 ```
 
 How might the adult alpha cell gene expression differ from the adult beta cell gene expression values? Let's start by subsetting and plotting the data from the adult beta cell samples. (Hint: Use previous commands in this assignment or look back at HW#2 to subset and plot the data.)
+
 39) Subset rows in the sra `data.frame` for adult beta cells. Rather than using the & operator as done in 29-31, you could choose to use the column title "source_name". Assign the subsetted data to "adult_beta_cell_samples"
 40) Use "adult_beta_cell_samples" to find the associated column "Run" from the sra `data.frame`. Assign this subset to the name roi.
 41) Use `as.character()` so that roi will be used as a character instead of a factor. View coi to be sure it outputs what you expect.
@@ -220,7 +232,7 @@ boxplot(log2(rowMeans(pancreas[,as.character(coi)]+1)),na.rm=FALSE)
 #Type your command here
 ```
 
-####Plotting 2 data subsets in the same plot
+#### Plotting 2 data subsets in the same plot
 
 45) Let's plot these samples together. We can do this by using `add=TRUE` to the second `boxplot()`
 
@@ -251,7 +263,7 @@ boxplot(log2(rowMeans(pancreas[,as.character(roi)]+1)),na.rm=FALSE,
 #Type your command here
 ```
 
-####Adding a legend
+#### Adding a legend
 
 49) In order for us to tell which plot is from adult alpha cells/adult beta cells, let's add colors to the plots and a legend to identify which is which. To begin, we will change the first plot to green and the second plot to red by adding `col="green"` and `col="red"`, respectively. Then we will add a legend by adding a new command `legend()`. We can choose the placement of the legend using "bottomright", label the plots and add colors to the squares using `fill()`. The first command for legend has been done for you.
 
@@ -282,7 +294,7 @@ legend("bottomright", legend = c("alpha cells","beta cells"), fill = c("green", 
 #Type your command here
 ```
 
-####Histogram
+#### Histogram
 
 Now we'd like to make a histogram using `barplot()` to plot the number of gene expression values above 100000 for each sample in the pancreas `data.frame`. 
 
