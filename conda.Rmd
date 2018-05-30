@@ -12,9 +12,9 @@ date: "June 4, 2018"
 srun -p shared -c 1 --mem 1024 -t 120 --pty bash
 ```
 
-- Your prompt should change from `[username@jhu.edu@login-node00 ~] $` to 
-`[username@jhu.edu@compute0000 ~] $`
-- **Never, ever run programs if your prompt says `login-node`**
+- Your prompt should change from `[username@login-node00 ~]` to 
+`[username@compute0000 ~]`.
+- **Never, ever run programs if your prompt says `login-node`**.
 
 ## Load conda package manager
 
