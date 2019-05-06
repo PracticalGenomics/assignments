@@ -1,0 +1,464 @@
+---
+title: "Practical Genomics Preparation Work - R"
+subtitle: "Practical Genomics 2018"
+author: "Melissa Keinath & Lindsay Hayes"
+date: "May 4, 2019"
+output:
+  html_document:
+    toc: true
+---
+
+## Instruction
+
+Read the assignment and complete the missing code. 
+- Write the correct code in the "# >>> Place your answer here" blocks
+- Correct the coding mistakes in the "# >>> Fix this code" blocks
+
+## Learning Objectives
+
+1. Learn some analysis workflows
+    - Obtain data programmatically
+    - Use R Markdown documents to communicate analyses
+2. Practice manipulating genomics data using R
+    - Subset data.frames by columns, rows, rows matching a specific column
+3. Decipher and debug errors
+    - add comments to RMarkdown
+    - correct code to run properly
+4. Visualize data
+    - boxplots, barplots, scatterplots
+    - plotting 2 data subsets in one plot
+    - adding a legend
+
+## Assignment
+
+In this assignment, you will look through a gene expression dataset of highly purified human adult and developing fetal pancreatic alpha and beta cells (data from a project that led to this paper doi:10.2337/db15-0039).
+
+- Task 1. Download and load datasets
+- Task 2. Visualize and explore data
+- Task 3. Subset data
+- Task 4. Plot data subsets
+- Task 5. Troubleshoot error messages
+
+## Preparation
+
+#### Understand formatting in RMarkdown using chunks
+
+In RMarkdown, you can write code in chunks. Code that will be run must have 3 back ticks and {r} before the code starts, and after the code, 3 more back ticks, indicating the end of the code. That means you can put multiple commands in one chunk as long as you maintain the formatting. If you want to add a comment (a string of words that is not code, called a comment; use a pound sign before it) Check out this site for some details: (https://earthdatascience.org/courses/earth-analytics/document-your-science/rmarkdown-code-chunks-comments-knitr/) For the rest of the assignment, you will have multiple commands running in a single chunk. 
+
+#### Working space
+
+Before you start, make a new folder called "PG2019" on your computer's desktop. Because R stores data in a directory on your computer, use `getwd()` (get working directory) to determine where you are working and where your data will be saved. This function has no arguments. If you are not working in your PG2019 folder on your desktop you will need to set your working directory. Cilck on Session > Set Working Directory > Choose Directory and navigate to the folder "PG2019" on your desktop. 
+
+```{r}
+getwd()
+```
+
+## TASK 1: Download and Load Data
+
+#### Obtain data
+
+1) Download the pancreatic dataset from the recount2 repository, which contains summarized gene expression data from >70,000 human RNA-seq samples from the Sequence Read Archive (SRA). Use the function `download.file()` and the web link "http://idies.jhu.edu/recount/data/v2/SRP056835/counts_gene.tsv.gz" to download "SRP056835.tsv.gz". 
+2) Load the data using the function `read.table()`. Note that as the dataset contains headers you must use `header=TRUE`.  Assign the `data.frame` to the name "pancreas" using `<-`. In R this arrow `<-` always assigns something to a variable. In this case the table is assigned to the variable names "pancreas". In other cases, we might use a single letter or abbreviation to represent a value, a table or data subset.
+
+```{r}
+download.file( "http://idies.jhu.edu/recount/data/v2/SRP056835/counts_gene.tsv.gz", "SRP056835.tsv.gz" )
+pancreas <- read.table( "SRP056835.tsv.gz", header=TRUE )
+```
+
+3) Download the associated SRA run table "SraRunTable.txt" from "http://practicalgenomics.github.io/data/SraRunTable.txt"  
+4) Load the data and assign it to the name "sra". Note that the data has `headers` and is tab delimited, so `sep = "\t"` must be used
+
+```{r}
+# >>> Place your answers to 3 and 4 here
+```
+
+## TASK 2: Visualize and Explore Data
+
+#### View data
+
+The most important first step in any data analyses is to look at the data. `data.frame`s can be explored interactively in RStudio. View all of the data by clicking on the `data.frame` in the Environment tab to the right. View a reduced representation by using the function `head()` or `tail()`. The function `tail()` shows the end of a file and is especially useful for checking that a file downloaded completely while `head()` shows the beginning of a file. The function `summary()` provides the mean, median, 25th and 75th quartiles, minimum and maximum for each numeric column.
+
+5) View only the **end** of the pancreas `data.frame` to be sure it was loaded completely.
+
+```{r}
+# >>> Complete this command
+pancreas
+```
+
+6) View the **beginning** of the pancreas `data.frame`.
+
+```{r}
+# >>> Complete this command
+pancreas
+```
+
+7) View the **beginning** of the sra run table.
+
+```{r}
+# >>> Place your answer here
+```
+
+8) View the **end** of the sra run table.
+
+```{r}
+# >>> Place your answer here
+```
+
+#### Basic exploration
+Before plotting data, it's important to know if the data can be plotted.You can determine whether the data is numerical.
+Ask yourself a few basic questions whenever you are about to work with a new dataset:
+What type of data is this? character, numerical, integer, logical, factor
+How many rows and columns does it have? 
+
+9) Use the function `class()` for the pancreatic dataset to determine what type of data it is.
+10) Use the function `str()` to determine the organization of the pancreatic dataset
+11) Use the function `dim()` to find the number of rows and columns in pancreas.
+12) Use the function `nrow()` determine the number of rows in the pancreas dataset.
+13) Use the function `ncol()` determine the number of columns in the pancreas dataset.
+
+```{r}
+# >>> Place your answers here for 9 - 13
+```
+
+14) How many rows are in the sra dataset
+15) How many column are in the sra dataset
+
+```{r}
+# >>> Place your answers here for 14 - 15
+```
+
+## TASK 3: Subset data.frames
+
+You can see that the pancreas `data.frame` has a column containing gene ids, which are not numerical. In order to plot this data, this column must be removed. You can do this by subsetting the data. To get you started with the basic technique of subsetting, try several short exercises.
+
+#### Retrieve single cell, a row, and a column
+
+To retrieve a single cell from a `data.frame`, use the name of the `data.frame` and single square brackets containing [row#,col#].
+
+16) To retrieve an entire row record from the `data.frame`, simply leave the column empty. Retrieve the first row record. 
+
+```{r}
+sra[1,]
+```
+
+17) To retrieve an entire column, leave the row number black. Use this to retrieve the first column.
+
+```{r}
+sra[,1]
+```
+
+18) View a single cell from row 1, column 2.
+
+```{r}
+# >>> Fix this command
+sra[row,column]
+```
+
+19) The same column can be accessed using the `$` between the `data.frame` name and the column name with no spaces. You can use the function `colnames()` to list the names of the columns. Use the `$` and name of column 1 to retrieve the entire first column. 
+
+```{r}
+colnames(sra)
+# >>> Finish this code
+sra$
+```
+
+#### Retrieving multiple rows and columns
+
+20) To retrieve multiple row records, use `c()`, which stands for concatenate, within the single square brackets. Retrieve **rows** 10 and 20. Note the comma for columns. 
+21) Use the same technique to retrieve **columns** 1 and 4. 
+```{r}
+sra[c(10,20),]
+# >>> Place your answer here for 21
+```
+
+22) Finally, if you need to retrieve several consecutive columns/rows, you can get rid of the `c` and use a `:` between the lowest and highest column numbers you wish to retrieve (i.e. for columns 2 through 6, use `(2:6)`). Retrieve all columns that are numerical from the pancreas dataset using a `:`.
+
+```{r}
+# >>> Complete the command for 22
+pancreas
+```
+
+23) Retrieve rows 999 and 1066 from the pancreas `data.frame`.
+24) Retrieve the column called "source_name" from the sra `data.frame`.
+25) Retrieve columns 1-12 from the pancreas `data.frame` using the `:` instead of `c()`.
+
+```{r}
+# >>> Place your answer here for 23 - 25
+```
+
+#### Data Summaries
+
+We can get quick summaries of our `data.frame` using the `summary()` and `table()` functions.
+
+26) The function `summary()` is used to summarize an entire data.frame. For example for the pancreas `data.frame`. You can also use summary on only a subset of the data. Call the `summary()` function on the `source_name` column of the sra `data.base` to see how many samples are from each type. (hint use `$`)
+27) Use the `table()` function to count the number of samples that meet a criteria. For example to determine how many samples are adult versus fetal in the sra `data.frame`
+28) use the `table()` or `summary()` function to determine how many samples are alpha cells versus beta cells. (hint you need to use the `tissue` column in the sra `data.frame`)
+
+```{r}
+summary(pancreas)
+# >>> Place your answer here for 26
+table(sra$developmental_stage)
+# >>> Place your answer here for 28
+```
+
+
+#### Logical operators in R
+
+We can also use logical operators to subset our `data.frame`. For a logical equality, we must use a double equal sign `==`, which means "exactly equal to". We can also use `>`, `<` for "greater than" and "less than".
+
+29) Subset the sra `data.frame` to only include those rows that contain samples that are beta cells. We can refer to the column name "tissue" from the sra `data.frame` using $. In the same step, assign the subsetted data to the variable beta_cell_samples. 
+30) Examine beta_cell_samples by typing its name. 
+31) look at the `table` of beta_cell_samples does it match the counts from 28?
+```{r}
+beta_cell_samples <- sra$tissue == "beta cells"
+# >>> Place your answer here for 30
+# >>> Place your answer here for 31
+```
+
+32) Using the same method, subset the sra `data.frame` to only include those rows that contain samples that come from an adult. Refer to the column name "developmental_stage" from the sra `data.frame` using $. In the same step, assign the subsetted data to the variable adult_cell_samples.
+33) Examine adult_cell_samples. Besides typing the name of the variable containing the data you wish to visualize, you can view the results of a command you just typed by placing the entire command in parentheses. For this answer, copy your command and add parentheses around it.
+
+```{r}
+# >>> Place your answer here for 32-33
+```
+
+We can use another logical operator to find which rows are in both datasets. The operator `&` means "AND", and it combines each element of the first vector with the corresponding element of the second vector and gives the output TRUE only if both elements are TRUE. 
+
+34) Use the & operator to find in which rows the value is TRUE for both of the subsets (in other words, which rows were marked TRUE for being beta cells in beta_cell_samples and TRUE for being adult cells in adult_cell_samples). Assign it to the variable adult_beta_cells
+35) Examine adult_beta_cells
+
+```{r}
+adult_beta_cell_samples <- beta_cell_samples & adult_cell_samples
+# >>> Place your answer here for 35
+
+```
+
+36) Now combine all the skills you've learned so far! Use the `adult_beta_cell_samples` to subset the entire sra `data.frame` to keep only those samples that are both adult cells and beta cells.
+
+```{r}
+#Place your answer here for 36 
+```
+
+Another logical operator `|` means "OR", and it combines each element of the first vector with the corresponding element of the second vector and gives an output TRUE if at least one element is TRUE.
+
+37) Use the | operator to find in which rows the value is TRUE in at least one of the 2 subsets (in other words, which rows were marked TRUE for being beta cells in beta_cell_samples OR adult cells in adult_cell_samples). Assign it to the variable adult_or_beta_cell_samples.
+38) Examine adult_or_beta_cell_samples.
+39) Use adult_or_beta_cell_samples to subset the sra `data.frame` to keep only those samples that are either adult cells or beta cells.
+
+```{r}
+adult_or_beta_cell_samples <- beta_cell_samples | adult_cell_samples
+
+#Place your answer here for 38-39
+```
+
+40) Subset the sra `data.frame` for rows that contain adult alpha cells or adult beta cells in the column labeled source_name.
+41) use the `table` funciton to examine not_quite_right
+
+```{r}
+# We are purposefully making a mistake here; no need to correct the code.
+not_quite_right <- sra$source_name == c( "adult alpha cells", "adult beta cells" )
+
+#Place your answer for 41 in the line below
+
+```
+
+Even when R runs a command successfully, it's important to understand the code so that you don't trust data that has been improperly created. The logical operator == compares if two things are exactly equal. If the vectors are of equal length, elements will be compared element-wise. If not, vectors will be recycled. The length of output will be equal to the length of the longer vector. In this case, the recycling of vectors causes the return of only 6 samples, which is incorrect. Note the correct number of adult samples from step 27 above.
+
+Enters the operator `%in%`, which can be used to match a list of criteria from a column.
+
+42) Replace the `==` in the code below with a `%in%` to subset the sra `data.frame` for rows that contain adult alpha cells or adult beta cells in the column labeled source_name. Assign it to the name adult_cells.
+43) Examine adult_cells using `table`. Does it match the adult samples in step 27?
+
+```{r}
+#Fix this command
+adult_cells <- sra$source_name == c( "adult alpha cells", "adult beta cells" )
+#Place your answer for 43 in the line below, does it give 13 True?
+```
+
+## TASK 4: Visualize data using plots
+
+#### Make a boxplot for numerical data
+
+44) The function `boxplot()` is used to build boxplots from numerical data. To plot the numerical data from the pancreas `data.frame`. To build the plot faster lets just plot the first 1000 rows.
+
+```{r}
+boxplot(pancreas[1:1000,1:24])
+```
+
+45) To better view the data, complete the command below to make boxplots from the log2(x+1) numerical data from the pancreas `data.frame`. 
+
+```{r}
+# >>> Complete this command
+log2( pancreas[,1:24] + 1 )
+```
+
+Next we can add some features to the boxplot.
+46) Add a title to the boxplot by adding a comma and `main= Gene expression across pancreatic cells"` within the `boxplot()`
+47) Label the axes for the boxplot. We can add labels to the X and Y axes by adding `xlab="sample", ylab="gene expression"` within the `boxplot()`. Add a gold color to the boxes in the boxplot. We can add color to the boxplots by adding: `col="gold"` within the `boxplot()`
+
+```{r}
+boxplot(log2(pancreas[1:24]+1), 
+        main = "Gene expression across pancreatic samples")
+
+#Type your command here for 47
+
+```
+
+#### Make a barplot for numbers of genes with zero and nonzero values for each sample
+
+For every sample in the pancreas `data.frame`, there are multiple genes with no expression (i.e. value = 0). In order to plot how many genes with no expression we see for each sample, we must use logical indexing to focus on entries that match our criteria. 
+
+48) We will use `colSums()` to count the number of instances where a value is = 0 in the pancreas `data.frame`, and assign the resulting data to the name "pan_zero". Change the code below to assign the resulting data to the name "pan_zero", as done previously in Task 1 and view the output
+49) Build a barplot using the function `barplot()` for the pan_zero data.
+
+```{r}
+# >>> Complete this command
+colSums( pancreas == 0 )
+
+#Place your answer for 48 (hint view the output)
+
+barplot( pan_zero )
+```
+
+50) In the same way as above, assign the numbers of instances a column has greater than zero values to the name "pan_greaterthanzero". (note:  a warning will arise due to the last column containing gene IDs instead of numerical values. You may proceed despite the warning. If you know how to prevent this warning by using single square brackets to define the numerical portion of the pancreas `data.frame`, you may also do that.)
+51) Build a barplot from the greater than zero data.
+
+```{r}
+# >>> Place your answer to 50-51
+```
+
+#### Plot the mean gene expression across the sample types
+
+Now lets combine all the steps we've learned to plot the gene expression across the 2 adult sample types. First, lets filter out some of the genes based on expression. 
+
+52) In step 48, we used `colSums()` to sum all the gene expression values across each column, or sample. Now we can use `rowSums()` to sum all the gene expression across rows, or genes, excluding the last column that is the gene_id. Then we can plot the summary data  
+
+```{r}
+plot(rowSums(pancreas[,1:24]))
+```
+
+53) Note that many genes are clustered at the bottom because of the small number of genes with very high expression. We can use `ylim` to zoom into the plot.
+54) In addition, many genes have zero values.
+55) Lets limit our analysis to genes that have values >0 and less than 1e8 and assign this to a variable called keep.
+56) now plot the rowSums for the pancreas data we are keeping (hint, add "keep" to the row when subsetting pacreas)
+
+```{r}
+plot(rowSums(pancreas[,1:24]), ylim = c(0,1e8))
+plot(rowSums(pancreas[,1:24]), ylim = c(0,50))
+keep <- rowSums(pancreas[,1:24]) >0 & rowSums(pancreas[,1:24]) <1e8
+# >>> Place your answer to 56 to check the data filtering
+```
+
+
+Now that we have the gene set subsetted, next lets look at this data from a only the adult_beta_cell_samples that we subsetted in step 34. 
+
+57) We are interested specifically in those samples containing adult beta cells. Use the == operator to find only those rows with the source_name "adult beta cells" in the sra `data.frame`. Assign it to the name sra_adult_beta.
+58) Examine sra_adult_beta to be sure it outputs what you expect. (Hint see step 26)
+59) Find the associated `Run` from the sra table for those samples that are adult beta cells. Assign this subset to the name **coi**. 
+60)  When R stores coi, it is stored as a factor. A factor is a set of numeric codes with character-valued levels. When manipulating dataframes, character vectors and factors are treated very differently, and in this case, we need coi to be a character. Use `as.character()` so that coi will be used as a character instead of a factor. Examine coi to be sure it outputs what you expect. 
+61) Make a boxplot log2(x+1) of the mean gene expression values for the gene set we subsetted (keep) using `rowMeans` (i.e.row mean values) across only those samples that are made up of adult beta cells.
+
+```{r}
+sra_adult_beta <- sra$source_name == "adult beta cells"
+table(sra_adult_beta)
+coi <- sra[sra_adult_beta,]$Run
+coi = as.character(coi)
+boxplot(log2(rowMeans(pancreas[keep,coi],na.rm=FALSE)+1))
+```
+
+How might the adult alpha cell gene expression differ from the adult beta cell gene expression values? 
+
+62) Subset rows in the sra `data.frame` for adult alpha cells. Assign this a variable "sra_adult_alpha". Be sure to check you got the right samples!
+63) Use "sra_adult_alpha" to find the associated column "Run" from the sra `data.frame`. Assign this subset to the name "roi".
+64) Use `as.character()` so that roi will be used as a character instead of a factor. View roi to be sure it outputs what you expect.
+65) Make a boxplot log2(x+1) across only those samples that are made up of adult alpha cells.
+
+```{r}
+#Type your commands here from 62-65
+```
+
+#### Plotting 2 data subsets in the same plot
+
+66) Let's plot these samples together coloring each one with the 'col=' (as in step 47). We can do this by using `add=TRUE` to the second `boxplot()`. Add a color to the alpha cell boxplot.
+```{r}
+boxplot(log2(rowMeans(pancreas[keep,coi]+1)), na.rm=FALSE, col="blue")
+# Fix the second boxplot code to add a color
+boxplot(log2(rowMeans(pancreas[keep,roi]+1)), na.rm=FALSE, add =TRUE)
+```
+
+67) The box plots are overlapping eachother. Let's change their position by adding `at=-0.1` to the first plot and `at=-0.4` to the second plot.
+```{r}
+boxplot(log2(rowMeans(pancreas[keep,coi]+1)), na.rm=FALSE, col="blue", at=-0.1)
+# Fix the second boxplot code to add a color
+boxplot(log2(rowMeans(pancreas[keep,roi]+1)), na.rm=FALSE, col="gold", at=-0.4, add =TRUE)
+```
+
+68) The boxplots still overlap slightly; let's change the width of the boxplots themselves using `boxwex=0.5` for each plot.
+
+```{r}
+#Type your commands here for 68
+```
+
+#### Adding a legend
+
+69) In order for us to tell which plot is from adult alpha cells/adult beta cells, we will add a legend by adding a new command `legend()`. We can choose the placement of the legend using "bottomright", label the plots and add colors to the squares using `fill()`. The first command for legend has been done for you.
+
+```{r}
+boxplot(log2(rowMeans(pancreas[keep,coi]+1)),na.rm=FALSE, 
+        at=-.1,
+        boxwex=0.5,
+        col="blue")
+boxplot(log2(rowMeans(pancreas[keep,roi]+1)),na.rm=FALSE,
+        add =TRUE, 
+        at=-.4,
+        boxwex=0.5,
+        col="gold")
+legend("bottomright", legend = c("alpha cells","beta cells"), fill = c("gold", "blue"))
+```
+
+70) Finally, let's add a title and axes labels. For the title, you can add `main= "Gene expression across pancreatic cells"`. For the y axis, we will use `ylab="gene expression"` and the x axis will be `xlab="adult pancreatic cells"`. Add these labels to the first `boxplot()`.
+
+```{r}
+#Type your command here
+```
+
+## TASK 5: Troubleshoot error messages
+
+#### List of common errors and what they mean
+
+A) ‘could not find function’ = typo/misspelling OR R package not loaded properly
+B) ‘error in eval’ = references to objects that don't exist
+C) ‘object not found’ = variable “object” is empty
+D) ‘cannot open’ / ‘cannot open the connection’ = error in path
+E) ‘non-numeric variable in data frame’ = character used where number expected
+F) package error- unable to install, compile or load, maybe because of dependency/update
+
+Oh, no! I have written some code in response to several prompts, but I'm getting some errors. Please help! 
+To complete this task, you will run my code and receive an error. You'll find this error in the list above (A-F). You'll do 2 things: Add a comment (using `#`) on the line beneath the code (but before the end of the chunk marked by 3 back ticks) and below that, fix my code so that it runs properly without errors.
+
+71) Count the (TRUE/FALSE) if the gene expression values in sample SRR1951552 of the pancreas `data.frame` are greater than 0.
+
+```{r}
+# >>> Fix this code
+table(SRR1951552>0)
+# This is a comment. Type the error here.
+# Type proper code below
+```
+
+72) Use the function `boxplot()` to build a boxplot from the log2(x+1) of the expression values in the pancreas `data.frame`.
+
+```{r}
+# >>> Fix this code
+boxplot(log2( pancreas + 1 ))
+# This is a comment. Type the error here.
+# Type proper code below
+```
+
+73) Use the function `boxplot()` to build a boxplot from the log2(x+1) of the expression values in the pancreas `data.frame`. 
+
+```{r}
+# >>> Fix this code
+boxpolt(log2( pancreas[,1:24] + 1 ))
+# This is a comment. Type the error here.
+# Type proper code below
+```
